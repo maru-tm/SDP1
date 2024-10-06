@@ -8,6 +8,16 @@ public class WatermarkDecorator extends DocumentDecorator {
         super(decoratedDocument);
     }
 
-    // Задача: Реализуйте логику, которая сначала отображает документ, а затем добавляет к нему водяной знак.
-}
+    @Override
+    public void display() {
+        // Отображаем оригинальный документ
+        decoratedDocument.display();
+        // Добавляем водяной знак
+        addWatermark();
+    }
 
+    // Метод добавления водяного знака
+    private void addWatermark() {
+        System.out.println("Водяной знак добавлен к документу.");
+    }
+}

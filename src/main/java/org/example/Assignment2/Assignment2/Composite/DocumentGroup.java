@@ -12,9 +12,10 @@ public class DocumentGroup implements Document {
     // Задача: Реализуйте методы для добавления и удаления документов из группы,
     // а также отображение всех документов в группе через метод display().
     public void display(){
-        System.out.println(documents);
+        for (Document document : documents) {
+            document.display();  // Вызов метода display для каждого документа
+        }
     }
-
     public void addDocument(Document document){
         documents.add(document);
     }

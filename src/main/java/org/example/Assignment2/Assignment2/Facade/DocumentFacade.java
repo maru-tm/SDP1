@@ -1,9 +1,12 @@
 package org.example.Assignment2.Assignment2.Facade;
 
+import org.example.Assignment2.Assignment2.Bridge.DocumentRenderer;
 import org.example.Assignment2.Assignment2.Bridge.RenderEngine;
+import org.example.Assignment2.Assignment2.Bridge.SimpleDocumentRenderer;
 import org.example.Assignment2.Assignment2.Decorator.WatermarkDecorator;
 import org.example.Assignment2.Assignment2.Document;
 import org.example.Assignment2.Assignment2.Flyweight.DocumentFactory;
+import org.example.Assignment2.Assignment2.RealDocument;
 
 // Фасад для работы с документами
 public class DocumentFacade {
@@ -35,8 +38,11 @@ public class DocumentFacade {
     //Создайте объект рендерера, передав в конструктор выбранный движок рендеринга.
     //Вызовите метод рендеринга в рендерере для заданного документа.
     public void renderDocument(String filename, RenderEngine engine) {
-        engine.render(filename);
+        DocumentRenderer renderer = new SimpleDocumentRenderer(engine);
+
+        Document document = new RealDocument(filename);
+        renderer.render(document.toString());
     }
 
-}
 
+}

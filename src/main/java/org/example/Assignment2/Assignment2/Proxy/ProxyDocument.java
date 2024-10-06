@@ -14,14 +14,16 @@ public class ProxyDocument implements Document {
 
     // Задача: Вам нужно реализовать логику для создания документа только при первом обращении к методу display().
     // Если документ уже был загружен, он не должен загружаться заново.
-    public void display(){
-        if (realDocument == null){
-            System.out.println("Creating document");
+    @Override
+    public void display() {
+        // Проверяем, был ли уже загружен настоящий документ
+        if (realDocument == null) {
+            // Если документ ещё не загружен, создаём его
+            System.out.println("Создание настоящего документа: " + title);
             realDocument = new RealDocument(title);
-            realDocument.display();
-        }else {
-            realDocument.display();
         }
+        // Отображаем документ
+        realDocument.display();
     }
 }
 
