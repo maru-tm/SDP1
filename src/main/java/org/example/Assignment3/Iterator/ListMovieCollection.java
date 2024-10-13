@@ -3,6 +3,7 @@ package org.example.Assignment3.Iterator;
 import java.util.ArrayList;
 import java.util.List;
 
+// Коллекция фильмов, хранящихся в списке (List).
 public class ListMovieCollection {
     private List<String> movies;
 

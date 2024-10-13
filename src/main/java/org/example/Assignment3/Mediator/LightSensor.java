@@ -1,5 +1,6 @@
 package org.example.Assignment3.Mediator;
 
+// Сенсор освещённости.
 public class LightSensor implements Sensor {
     private HomeMediator mediator;
     private String data;

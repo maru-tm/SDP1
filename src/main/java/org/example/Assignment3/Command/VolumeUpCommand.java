@@ -1,5 +1,6 @@
 package org.example.Assignment3.Command;
 
+// Команда для увеличения громкости.
 public class VolumeUpCommand implements Command {
     private Television television;
 

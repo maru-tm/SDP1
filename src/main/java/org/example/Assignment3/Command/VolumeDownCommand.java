@@ -1,5 +1,6 @@
 package org.example.Assignment3.Command;
 
+// Команда для уменьшения громкости.
 public class VolumeDownCommand implements Command {
     private Television television;
 

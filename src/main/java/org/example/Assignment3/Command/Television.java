@@ -1,5 +1,6 @@
 package org.example.Assignment3.Command;
 
+// Класс телевизора, который выполняет реальные действия.
 public class Television {
     public void turnOn() {
         System.out.println("Телевизор включён.");

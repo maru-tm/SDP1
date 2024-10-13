@@ -1,5 +1,6 @@
 package org.example.Assignment3.Iterator;
 
+// Коллекция фильмов, хранящихся в массиве (Array).
 public class ArrayMovieCollection {
     private String[] movies;
 

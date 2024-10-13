@@ -1,6 +1,6 @@
 package org.example.Assignment3.Memento;
 
-
+// Редактор текста, который создает и восстанавливает снимки.
 public class TextEditor {
     private String text;
 
@@ -12,12 +12,12 @@ public class TextEditor {
         return text;
     }
 
-    // Creates a memento with the current text state
+    // Создаем снимок состояния с текущим текстом.
     public TextMemento save() {
         return new TextMemento(text);
     }
 
-    // Restores the text state from a memento
+    // Восстанавливаем состояние текста из переданного снимка.
     public void restore(TextMemento memento) {
         this.text = memento.getText();
     }

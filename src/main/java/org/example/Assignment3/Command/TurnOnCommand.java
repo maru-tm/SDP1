@@ -1,6 +1,6 @@
 package org.example.Assignment3.Command;
 
-
+// Команда для включения телевизора.
 public class TurnOnCommand implements Command {
     private Television television;
 

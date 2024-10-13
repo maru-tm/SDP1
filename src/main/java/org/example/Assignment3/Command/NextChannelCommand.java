@@ -1,5 +1,6 @@
 package org.example.Assignment3.Command;
 
+// Команда для переключения на следующий канал.
 public class NextChannelCommand implements Command {
     private Television television;
 

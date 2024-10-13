@@ -2,6 +2,7 @@ package org.example.Assignment3.Iterator;
 
 import java.util.List;
 
+// Итератор для обхода фильмов, хранящихся в списке (List).
 public class ListMovieIterator implements Iterator<String> {
     private List<String> movies;
     private int position = 0;

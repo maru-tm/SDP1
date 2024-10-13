@@ -4,6 +4,7 @@ package org.example.Assignment3.Mediator;
 import java.util.ArrayList;
 import java.util.List;
 
+// Реализация посредника, который собирает данные от сенсоров.
 public class HomeMediatorImpl implements HomeMediator {
     private List<Sensor> sensors = new ArrayList<>();
     private String temperatureData;
@@ -15,6 +16,7 @@ public class HomeMediatorImpl implements HomeMediator {
         sensors.add(sensor);
     }
 
+    // Метод для вывода отчета на основе собранных данных.
     @Override
     public void reportData() {
         System.out.println("Отчет о данных сенсоров:");

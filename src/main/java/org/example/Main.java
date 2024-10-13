@@ -21,78 +21,81 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        // Создаем различные способы оплаты с балансами
-        PaymentHandler paymentA = new PaymentA(100);
-        PaymentHandler paymentB = new PaymentB(300);
-        PaymentHandler paymentC = new PaymentC(1000);
+        // 1. Цепочка ответственности (Chain of Responsibility)
+        // Создаем обработчики платежей A, B и C.
+        PaymentHandler paymentA = new PaymentA();
+        PaymentHandler paymentB = new PaymentB();
+        PaymentHandler paymentC = new PaymentC();
 
-        // Устанавливаем цепочку обязанностей: A -> B -> C
-        paymentA.setNext(paymentB).setNext(paymentC);
+        // Устанавливаем цепочку: A -> B -> C
+        paymentA.setNextHandler(paymentB);
+        paymentB.setNextHandler(paymentC);
 
-        // Попытка покупки на сумму 210 долларов
-        double amountToPay = 210;
-        System.out.println("Покупка на сумму " + amountToPay + " долларов.");
-        paymentA.handlePayment(amountToPay);
+        // Проверяем обработку платежа на сумму 210 долларов
+        System.out.println("Покупка на сумму 210 долларов:");
+        paymentA.handlePayment(210); // Вызываем обработку платежа
 
-        // 2. Command Pattern
-        Television television = new Television();
+        // 2. Паттерн команды (Command Pattern)
+        System.out.println("\n=== Паттерн команды для телевизора ===");
+        Television tv = new Television(); // Создаем объект телевизора
+        // Создаем команды для управления телевизором
+        TurnOnCommand turnOn = new TurnOnCommand(tv);
+        TurnOffCommand turnOff = new TurnOffCommand(tv);
+        VolumeUpCommand volumeUp = new VolumeUpCommand(tv);
+        VolumeDownCommand volumeDown = new VolumeDownCommand(tv);
+        NextChannelCommand nextChannel = new NextChannelCommand(tv);
+        PreviousChannelCommand previousChannel = new PreviousChannelCommand(tv);
 
-        // Создаем команды
-        Command turnOn = new TurnOnCommand(television);
-        Command turnOff = new TurnOffCommand(television);
-        Command volumeUp = new VolumeUpCommand(television);
-        Command volumeDown = new VolumeDownCommand(television);
-        Command nextChannel = new NextChannelCommand(television);
-        Command previousChannel = new PreviousChannelCommand(television);
+        // Создаем пульт управления и добавляем команды
+        RemoteControl remote = new RemoteControl();
+        remote.addCommand("TurnOn", turnOn);
+        remote.addCommand("TurnOff", turnOff);
+        remote.addCommand("VolumeUp", volumeUp);
+        remote.addCommand("VolumeDown", volumeDown);
+        remote.addCommand("NextChannel", nextChannel);
+        remote.addCommand("PreviousChannel", previousChannel);
 
-        // Создаем пульт
-        RemoteControl remoteControl = new RemoteControl();
-        remoteControl.setTurnOnCommand(turnOn);
-        remoteControl.setTurnOffCommand(turnOff);
-        remoteControl.setVolumeUpCommand(volumeUp);
-        remoteControl.setVolumeDownCommand(volumeDown);
-        remoteControl.setNextChannelCommand(nextChannel);
-        remoteControl.setPreviousChannelCommand(previousChannel);
+        // Проверяем выполнение команд
+        remote.pressButton("TurnOn");
+        remote.pressButton("VolumeUp");
+        remote.pressButton("NextChannel");
+        remote.pressButton("TurnOff");
+        remote.pressButton("NonExistentCommand"); // Пример несуществующей команды
 
-        // Тестируем команды
-        remoteControl.pressTurnOn();         // Включаем телевизор
-        remoteControl.pressVolumeUp();       // Увеличиваем громкость
-        remoteControl.pressNextChannel();    // Переключаем на следующий канал
-        remoteControl.pressVolumeDown();     // Уменьшаем громкость
-        remoteControl.pressTurnOff();        // Выключаем телевизор
-
-        // 3. Iterator Pattern
-        // Создаем коллекцию фильмов на основе списка List
+        // 3. Итератор (Iterator Pattern)
+        // Создаем коллекцию фильмов на основе списка
         ListMovieCollection listCollection = new ListMovieCollection();
-        listCollection.addMovie("Inception");
+        listCollection.addMovie("Inception"); // Добавляем фильмы
         listCollection.addMovie("The Matrix");
         listCollection.addMovie("Interstellar");
 
-        // Создаем коллекцию фильмов на основе массива Array
+        // Создаем коллекцию фильмов на основе массива
         String[] movieArray = {"Titanic", "Avatar", "The Godfather"};
         ArrayMovieCollection arrayCollection = new ArrayMovieCollection(movieArray);
 
-        // Вывод фильмов из списка
+        // Выводим фильмы из списка с использованием итератора
         Iterator<String> listIterator = listCollection.createIterator();
         System.out.println("Фильмы из списка:");
         while (listIterator.hasNext()) {
-            System.out.println(listIterator.next());
+            System.out.println(listIterator.next()); // Проверяем наличие следующего фильма
         }
 
-        // Вывод фильмов из массива
+        // Выводим фильмы из массива с использованием итератора
         Iterator<String> arrayIterator = arrayCollection.createIterator();
         System.out.println("\nФильмы из массива:");
         while (arrayIterator.hasNext()) {
-            System.out.println(arrayIterator.next());
+            System.out.println(arrayIterator.next()); // Проверяем наличие следующего фильма
         }
 
-        // 4. Mediator Pattern
-        HomeMediatorImpl mediator = new HomeMediatorImpl();
+        // 4. Посредник (Mediator Pattern)
+        HomeMediatorImpl mediator = new HomeMediatorImpl(); // Создаем медиатор
 
+        // Создаем сенсоры
         Sensor temperatureSensor = new TemperatureSensor();
         Sensor humiditySensor = new HumiditySensor();
         Sensor lightSensor = new LightSensor();
 
+        // Устанавливаем медиатор для сенсоров
         temperatureSensor.setMediator(mediator);
         humiditySensor.setMediator(mediator);
         lightSensor.setMediator(mediator);
@@ -105,21 +108,21 @@ public class Main {
         // Выводим отчет по собранным данным
         mediator.reportData();
 
-        // 5. Memento Pattern
-        TextEditor editor = new TextEditor();
-        Caretaker caretaker = new Caretaker();
+        // 5. Паттерн снимка (Memento Pattern)
+        TextEditor editor = new TextEditor(); // Создаем текстовый редактор
+        Caretaker caretaker = new Caretaker(); // Создаем хранителя для снимков
 
-        // Add text to the editor
+        // Добавляем текст в редактор
         editor.setText("Hello, World!");
-        // Save the current state
+        // Сохраняем текущее состояние
         caretaker.addMemento(editor.save());
 
-        // Add more text
+        // Добавляем больше текста
         editor.setText("Hello, World! How are you?");
-        System.out.println("Current Text: " + editor.getText());
+        System.out.println("Текущий текст: " + editor.getText());
 
-        // Restore the previous state
+        // Восстанавливаем предыдущее состояние
         editor.restore(caretaker.getMemento(0));
-        System.out.println("Restored Text: " + editor.getText());
+        System.out.println("Восстановленный текст: " + editor.getText());
     }
 }
